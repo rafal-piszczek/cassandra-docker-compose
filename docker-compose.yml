@@ -1,0 +1,29 @@
+version: '3'
+services:
+  cassandra_node_1:
+    container_name: cassandra_node_1
+    image: ${CASANDRA_IMAGE}
+    volumes:
+      - ./cassandra_node_1_data:/var/lib/cassandra
+    environment:
+      - CASSANDRA_CLUSTER_NAME=${CASSANDRA_CLUSTER_NAME}
+      - CASSANDRA_SEEDS=${CASSANDRA_SEEDS}
+      - MAX_HEAP_SIZE=1024M
+      - HEAP_NEWSIZE=1M
+    networks:
+      - cassandra_network
+  cassandra_node_2:
+    container_name: cassandra_node_2
+    image: ${CASANDRA_IMAGE}
+    volumes:
+      - ./cassandra_node_2_data:/var/lib/cassandra
+    environment:
+      - CASSANDRA_CLUSTER_NAME=${CASSANDRA_CLUSTER_NAME}
+      - CASSANDRA_SEEDS=${CASSANDRA_SEEDS}
+      - MAX_HEAP_SIZE=1024M
+      - HEAP_NEWSIZE=1M
+    networks:
+      - cassandra_network
+networks:
+  cassandra_network:
+    driver: bridge
